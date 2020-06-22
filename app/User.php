@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Relationships: User Info (1 - 1)
+     */
+    public function info()
+    {
+
+        return $this->hasOne('App\UserInfos');
+    }
 }
