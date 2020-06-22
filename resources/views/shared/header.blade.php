@@ -15,7 +15,7 @@
             <a href="{{ route('users.index') }}">Users</a>
         </li>
         <li>
-            <a href="">Posts</a>
+            <a href="{{ route('posts.index') }}">Posts</a>
         </li>
     </ul>
 </header>

@@ -17,3 +17,6 @@ Route::get('/', 'HomeController@index')->name('home');
 
 // Users
 Route::resource('users', 'UsersController');
+
+// Posts
+Route::resource('posts', 'PostsController');
