@@ -1,9 +1,18 @@
 @extends('templates.main')
 
 @section('main-content')
-<h1 class="text-center my-10 text-xl">Posts</h1>
-{{ $posts->links()}}
+@if (session('post_success'))
+<div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+    <p class="font-bold">Success</p>
+    <p class="text-sm">New post created.</p>
+</div>
 
+@endif
+<h1 class="text-center my-10 text-xl">Posts</h1>
+<a class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+    href="{{ route('posts.create') }}">New Post</a>
+
+{{ $posts->links()}}
 @foreach ($posts as $post)
 <div class="w-4/5 rounded overflow-hidden shadow-lg my-5 mx-auto bg-white p-4">
     <h2 class="text-xl">Title: {{ $post->title }}</h2>
