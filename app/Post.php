@@ -20,4 +20,11 @@ class Post extends Model
 
         return $this->belongsTo('App\User');
     }
+
+    // Relationship: Comments (1 - *)
+    public function comments()
+    {
+
+        return $this->hasMany('App\Comment');
+    }
 }
