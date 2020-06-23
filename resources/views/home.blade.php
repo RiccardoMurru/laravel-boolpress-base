@@ -1,5 +1,5 @@
 @extends('templates.main')
 
 @section('main-content')
-<h1>Blog Home</h1>
+<h1 class="text-center my-10 text-xl">Blog Home</h1>
 @endsection

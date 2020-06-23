@@ -1,5 +1,7 @@
 @include('shared.header')
 
-@yield('main-content')
+<main class="container mx-auto">
+    @yield('main-content')
+</main>
 
 @include('shared.footer')
