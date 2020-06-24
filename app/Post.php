@@ -28,4 +28,11 @@ class Post extends Model
 
         return $this->hasMany('App\Comment');
     }
+
+    // Relationship: tags (* - *)
+    public function tags()
+    {
+
+        return $this->belongsToMany('App\Tag');
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\User;
+use App\Tag;
+use Illuminate\Support\Str;
 
 class PostsController extends Controller
 {
@@ -29,8 +31,9 @@ class PostsController extends Controller
     public function create()
     {
         $users = User::all();
+        $tags = Tag::all();
 
-        return view('posts.create', compact('users'));
+        return view('posts.create', compact('users', 'tags'));
     }
 
     /**
@@ -41,15 +44,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
         $user_id = $request->input('user_id');
+        $data = $request->all();
 
         // validate
-        $request->validate([
-            'title' => 'required|max:100',
-            'body' => 'required|max:250',
-            'category' => 'required|max:50'
-        ]);
+        $request->validate($this->validate_rules());
+
+        $data['slug'] = Str::slug($data['title'], '-');
 
         $new_post = new Post();
         $new_post->user_id = $user_id;
@@ -58,8 +59,11 @@ class PostsController extends Controller
         $saved_post = $new_post->save();
 
         if ($saved_post) {
+            if (!empty($data['tags'])) {
+                $new_post->tags()->attach($data['tags']);
+            }
 
-            return redirect()->route('posts.index')->with('post_success');
+            return redirect()->route('posts.show', $new_post->slug)->with('post_success', $new_post->title);
         }
     }
 
@@ -108,5 +112,17 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Validation rules
+     */
+    private function validate_rules()
+    {
+        return [
+            'title' => 'required|max:100',
+            'body' => 'required|max:250',
+            'tags.*' => 'exists:tags,id'
+        ];
     }
 }
