@@ -1,10 +1,11 @@
 @extends('templates.main')
 
 @section('main-content')
-@if (session('post_success'))
+
+@if (session('post_deleted'))
 <div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
     <p class="font-bold">Success</p>
-    <p class="text-sm">New post created.</p>
+    <p class="text-sm">Post {{ session('post_deleted') }} deleted.</p>
 </div>
 
 @endif

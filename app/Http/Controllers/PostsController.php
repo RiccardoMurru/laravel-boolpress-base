@@ -128,9 +128,17 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $title = $post->title;
+
+        $post->tags()->detach();
+        $deleted_post = $post->delete();
+
+        if ($deleted_post) {
+
+            return redirect()->route('posts.index')->with('post_deleted', $title);
+        }
     }
 
     /**

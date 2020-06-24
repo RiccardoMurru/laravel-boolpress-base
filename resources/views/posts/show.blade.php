@@ -24,6 +24,12 @@
         href="{{ route('posts.index') }}">Back to Archive</a>
     <a class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         href="{{ route('posts.edit', $post->id) }}">Edit Post</a>
+    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <input class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" 
+            type="submit" value="Delete Post">
+    </form>
 </div>
 
 <div class="w-4/5 rounded overflow-hidden shadow-lg my-5 mx-auto bg-white p-4">
