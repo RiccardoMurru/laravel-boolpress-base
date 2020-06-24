@@ -44,11 +44,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validate_rules());
+
         $user_id = $request->input('user_id');
         $data = $request->all();
 
         // validate
-        $request->validate($this->validate_rules());
 
         $data['slug'] = Str::slug($data['title'], '-');
 
@@ -86,9 +87,13 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $users = User::all();
+        $tags = Tag::all();
+
+
+        return view('posts.edit', compact('post', 'users', 'tags'));
     }
 
     /**
@@ -98,9 +103,23 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate($this->validate_rules());
+        
+        $data = $request->all();
+
+        $updated_post = $post->update($data);
+
+        if ($updated_post) {
+            if (!empty($data['tags'])) {
+                $post->tags()->sync($data['tags']);
+            } else {
+                $post->tags()->detach();
+            }
+
+            return redirect()->route('posts.show', $post->slug)->with('post_updated', $post->title);
+        }
     }
 
     /**

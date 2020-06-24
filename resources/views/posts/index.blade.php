@@ -19,8 +19,18 @@
 <div class="w-4/5 rounded overflow-hidden shadow-lg my-5 mx-auto bg-white p-4">
     <h2 class="text-xl">Title: {{ $post->title }}</h2>
     <h3 class="text-lg">Author: {{ $post->user->name }}</h3>
-    <h4 class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">Category:
-        {{ $post->category }}</h4>
+    <div class="my-3">
+        Category:
+
+        @forelse ($post->tags as $tag)
+        <span class="inline-block bg-teal-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-100 mr-2">
+            #{{ $tag->name }}
+        </span>
+        @empty
+        <span>No categories yet</span>
+        @endforelse
+    </div>
+
     <p class="my-5">{{ $post->body }}</p>
     <a class="text-teal-600" href="{{ route('posts.show', $post->slug) }}">Read more</a>
 </div>

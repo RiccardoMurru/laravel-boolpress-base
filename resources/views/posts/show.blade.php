@@ -8,12 +8,22 @@
 </div>
 
 @endif
-<h1 class="text-center my-10 text-xl">Posts</h1>
-<div class="flex justify-around">
+
+@if (session('post_updated'))
+<div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
+    <p class="font-bold">Success</p>
+    <p class="text-sm">Post {{ session('post_updated') }} edited.</p>
+</div>
+
+@endif
+<h1 class="text-center my-10 text-xl">Post details</h1>
+<div class="flex justify-around items-center w-1/2 mx-auto">
     <a class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         href="{{ route('posts.create') }}">New Post</a>
     <a class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         href="{{ route('posts.index') }}">Back to Archive</a>
+    <a class="inline-block bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        href="{{ route('posts.edit', $post->id) }}">Edit Post</a>
 </div>
 
 <div class="w-4/5 rounded overflow-hidden shadow-lg my-5 mx-auto bg-white p-4">
